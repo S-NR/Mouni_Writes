@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saved Lyrics</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        .lyrics-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Saved Lyrics</h1>
+
+<a href="index.html">← Home</a>
+
+<div id="lyricsContainer"></div>
+
+<script>
+
+let lyricsData =
+    JSON.parse(localStorage.getItem("savedLyrics")) || [];
+
+let container =
+    document.getElementById("lyricsContainer");
+
+if(lyricsData.length === 0) {
+    container.innerHTML = "<p>No lyrics saved yet.</p>";
+}
+
+lyricsData.forEach(item => {
+
+    container.innerHTML += `
+        <div class="lyrics-card">
+            <h2>${item.title}</h2>
+            <small>${item.date}</small>
+            <pre>${item.lyrics}</pre>
+        </div>
+    `;
+});
+
+</script>
+
+</body>
+</html>
