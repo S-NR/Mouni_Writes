@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lyrics Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lyrics Library</h1>
+
+    <!-- Lyrics Selection -->
+    <section>
+        <h2>Select Lyrics</h2>
+
+        <select id="lyricsDropdown">
+            <option value="">-- Select Lyrics --</option>
+            <option value="lyrics1.html">Love Song</option>
+            <option value="lyrics2.html">Friendship Song</option>
+            <option value="lyrics3.html">Melody Song</option>
+        </select>
+
+        <br><br>
+
+        <button onclick="goToLyrics()">Open Lyrics</button>
+    </section>
+
+    <!-- Author Section -->
+    <section>
+        <h2>Write New Lyrics</h2>
+
+        <input type="text" id="title" placeholder="Lyrics Title" style="width:100%;padding:10px;">
+        <br><br>
+
+        <textarea id="lyricsText" placeholder="Write your lyrics here..."></textarea>
+
+        <br>
+
+        <button onclick="saveLyrics()">Save Lyrics</button>
+
+        <button onclick="window.location.href='saved_lyrics.html'">
+            View Saved Lyrics
+        </button>
+    </section>
+
+<script>
+
+function goToLyrics() {
+    let page = document.getElementById("lyricsDropdown").value;
+
+    if(page !== "") {
+        window.location.href = page;
+    }
+}
+
+function saveLyrics() {
+
+    let title = document.getElementById("title").value;
+    let lyrics = document.getElementById("lyricsText").value;
+
+    if(title === "" || lyrics === "") {
+        alert("Please enter title and lyrics.");
+        return;
+    }
+
+    let allLyrics =
+        JSON.parse(localStorage.getItem("savedLyrics")) || [];
+
+    allLyrics.push({
+        title: title,
+        lyrics: lyrics,
+        date: new Date().toLocaleString()
+    });
+
+    localStorage.setItem(
+        "savedLyrics",
+        JSON.stringify(allLyrics)
+    );
+
+    alert("Lyrics Saved!");
+
+    document.getElementById("title").value = "";
+    document.getElementById("lyricsText").value = "";
+}
+
+</script>
+
+</body>
+</html>
